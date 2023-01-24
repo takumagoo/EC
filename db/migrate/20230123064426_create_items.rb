@@ -12,10 +12,7 @@ class CreateItems < ActiveRecord::Migration[6.1]
       t.integer :price
       # 販売ステータス
       t.boolean :is_active
-      # 登録日時
-      t.datetime :created_at
-      # 更新日時
-      t.datetime :updated_at
+
 
       t.timestamps
     end

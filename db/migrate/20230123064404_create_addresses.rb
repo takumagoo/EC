@@ -10,10 +10,8 @@ class CreateAddresses < ActiveRecord::Migration[6.1]
       t.string :postal_code
       # 住所
       t.string :address
-      # 登録日時
-      t.datetime :created_at
-      # updated_at
-      t.datetime :updated_at
+
+
 
       t.timestamps
 
