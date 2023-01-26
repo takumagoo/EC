@@ -1,11 +1,12 @@
 class Admin::GenresController < ApplicationController
   # ジャンルコントローラ
   # Viewへ渡すためのインスタンス変数
-  def new
-    @genre = Genre.new
-  end
-  
+  # def new
+  #   @genre = Genre.new
+  # end
+
   def index
+    @genre = Genre.new
     @genres = Genre.all
   end
 
