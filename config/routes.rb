@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
   # 管理者
+  # namespace :admin do
+  #   resources :genres, only: [:index, :new, :create, :show, :edit, :update]
+  # end
+  # 管理者
   namespace :admin do
-    resources :genres, only: [:index, :new, :create, :show, :edit, :update]
+    resources :items, only: [:index, :new, :create, :show, :edit, :update]
   end
+
   # 顧客
   namespace :public do
-    resources :genres, only: [:index, :show]
+    resources :items, only: [:index, :show]
   end
 
   namespace :admin do
