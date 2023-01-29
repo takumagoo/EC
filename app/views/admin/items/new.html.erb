@@ -13,7 +13,7 @@
     <%= f.text_area :introduction %>
     <!--ジャンル選択欄(セレクトボックス)-->
     <p>ジャンル</p>
-    <%= f.select :genres_id, options_from_collection_for_select(Genre.all, :id, :name) %>
+    <%= f.select :genre_id, options_from_collection_for_select(Genre.all, :id, :name) %>
     <!--税抜き価格入力欄-->
     <p>税抜き価格</p>
     <%= f.text_field :price %>

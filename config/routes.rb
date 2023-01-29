@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+
+  namespace :admin do
+    resources :customers, only: [:index, :show, :edit, :update]
+  end
   # 管理者
   # namespace :admin do
   #   resources :genres, only: [:index, :new, :create, :show, :edit, :update]
