@@ -1,7 +1,7 @@
 class Item < ApplicationRecord
     # 商品画像をactive_storageと紐づけ
-     has_one_attached :merch_image
-
+    has_one_attached :merch_image
+    has_many :order_detail, dependent: :destroy
     belongs_to :genre
 
     def get_merch_image(width, height)
@@ -11,6 +11,5 @@ class Item < ApplicationRecord
         end
         merch_image.variant(resize_to_limit: [width, height]).processed
     end
-
 
 end
