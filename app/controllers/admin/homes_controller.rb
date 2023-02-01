@@ -4,4 +4,7 @@ class Admin::HomesController < ApplicationController
     @orders = Order.all
   end
   
+  def about
+    
+  end
 end

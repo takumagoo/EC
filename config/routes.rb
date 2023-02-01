@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :orders, only: [:show, :update]
     root to: "homes#top"
+    get 'homes/about' => 'homes#about'
   end
 
   namespace :admin do
