@@ -1,19 +1,22 @@
 <p id="notice"></p>
 
 <div class="container">
+  <h5 class="bg-secondary text-dark d-inline-block">管理者ログイン</h5>
   <div class="row">
-    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0">
-      <h4 class="bg-light text-dark">管理者ログイン</h4>
+
+    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 d-flex justify-content-center ">
+
 
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-        <div class="field">
-          <%= f.label :email, 'メールアドレス' %>
-          <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        <div class="row">
+          <div class="col-5 pb-3"><%= f.label :email, 'メールアドレス' %></div>
+
+          <div class="col-7 pb-3"><%= f.email_field :email, autofocus: true, autocomplete: "email" %></div>
         </div>
 
-        <div class="field">
-          <%= f.label :password, 'パスワード' %>
-          <%= f.password_field :password, autocomplete: "current-password" %>
+       <div class="row">
+          <div class="col-5 pb-4"><%= f.label :password, 'パスワード' %></div>
+          <div class="col-7 pb-4"><%= f.password_field :password, autocomplete: "current-password" %></div>
         </div>
 
         <!--<%# if devise_mapping.rememberable? %>-->
@@ -23,9 +26,10 @@
         <!--  </div>-->
         <!--<%# end %>-->
 
-        <div class="actions">
-          <%= f.submit "ログイン", class: "btn btn-primary" %>
-
+        <!--<div class="actions">-->
+        <div class="row">
+          <div class="col-5"></div>
+          <div class="col-7"><%= f.submit "ログイン", class: "btn btn-primary" %></div>
         </div>
       <% end %>
 
