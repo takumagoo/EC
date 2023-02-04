@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   # 顧客
   namespace :public do
     resources :items, only: [:index, :show]
+    root to: "homes#top"
+    get 'homes/about' => 'homes#about'
   end
 
   namespace :admin do
