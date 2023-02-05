@@ -3,10 +3,27 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
   <%= render "public/shared/error_messages", resource: resource %>
 
+  <label>名前</label><br />
+  (姓)<%= f.text_field :last_name %>
+  (名)<%= f.text_field :first_name %><br />
+
+  <label>フリガナ</label><br />
+  (セイ)<%= f.text_field :last_name_kana %>
+  (メイ)<%= f.text_field :first_name_kana %>
+
   <div class="field">
     <%= f.label :email %><br />
     <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
   </div>
+
+  <label>郵便番号(ハイフンなし)</label><br />
+  <%= f.text_field :postal_code %><br />
+
+  <label>住所</label><br />
+  <%= f.text_field :address %><br />
+
+  <label>電話番号(ハイフンなし)</label><br />
+  <%= f.text_field :telephone_number %><br />
 
   <div class="field">
     <%= f.label :password %>
@@ -24,6 +41,10 @@
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>
+
+  <h2>既に登録済みの方</h2>
+  <%= link_to 'こちら', new_customer_session_path %>からログインしてください。
+
 <% end %>
 
-<%= render "public/shared/links" %>
+<%#= render "public/shared/links" %>

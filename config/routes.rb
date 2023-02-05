@@ -14,19 +14,24 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :items, only: [:index, :new, :create, :show, :edit, :update]
   end
-
+  
+  namespace :admin do
+    # get 'genres/index'
+    # get 'genres/edit'
+    resources :genres, only: [:index, :create, :edit, :update]
+  end
+  
   # 顧客
   namespace :public do
     resources :items, only: [:index, :show]
     root to: "homes#top"
     get 'homes/about' => 'homes#about'
   end
-
-  namespace :admin do
-    # get 'genres/index'
-    # get 'genres/edit'
-    resources :genres, only: [:index, :create, :edit, :update]
+  namespace :public do
+    resources :customers, only: [:edit, :update, :unsubscribe, :withdrawal, :destroy]
+    get '/customers/my_page' => 'coustomers#show'
   end
+  
   # 顧客用
   # URL /customers/sign_in ...
   devise_for :customers,skip: [:passwords], controllers: {
