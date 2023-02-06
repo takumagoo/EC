@@ -1,3 +1,27 @@
+<header class="shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <h1>LOGO</h1>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ml-auto">
+            <% if admin_signed_in? %>
+              <li class="nav-item"><%= link_to "商品一覧", items_path, class: "btn btn-sm btn-outline-secondary" %></li>
+              <li class="nav-item  ml-3">会員一覧</li>
+              <li class="nav-item  ml-3"><%#= link_to "注文履歴一覧", admin_homes_about_path %>注文履歴一覧</li>
+              <li class="nav-item"><%= link_to "ジャンル一覧", admin_genres_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+              <li class="nav-item"><%= link_to "ログアウト",  destroy_admin_session_path, method: :delete, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+            <% else %>
+              <li class="nav-item"><%= link_to "About", homes_about_path, class: "btn btn-sm btn-outline-secondary " %></li>
+              <li class="nav-item"><%= link_to "商品一覧", admin_items_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+              <li class="nav-item"><%= link_to "新規登録", new_admin_session_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+              <li class="nav-item"><%= link_to "ログイン", new_admin_session_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+</header>
+
 <p id="notice"></p>
 
 <div class="container">
@@ -6,7 +30,6 @@
 
     <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 d-flex justify-content-center ">
 
-
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
         <div class="row">
           <div class="col-5 pb-3"><%= f.label :email, 'メールアドレス' %></div>
@@ -14,7 +37,7 @@
           <div class="col-7 pb-3"><%= f.email_field :email, autofocus: true, autocomplete: "email" %></div>
         </div>
 
-       <div class="row">
+        <div class="row">
           <div class="col-5 pb-4"><%= f.label :password, 'パスワード' %></div>
           <div class="col-7 pb-4"><%= f.password_field :password, autocomplete: "current-password" %></div>
         </div>
