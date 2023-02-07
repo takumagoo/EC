@@ -1,3 +1,44 @@
-<h1>Public::Customers#show</h1>
-<h1>My_page</h1>
-<p>Find me in app/views/public/customers/show.html.erb</p>
+<header class="shadow-sm">
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+      <h1>LOGO</h1>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+            <li>ようこそ氏名</li>
+            <li class="nav-item"><%= link_to "マイページ", customers_my_page_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+            <li class="nav-item"><%= link_to "商品一覧", items_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+            <li class="nav-item  ml-3">カート</li>
+            <li class="nav-item"><%= link_to "ログアウト",  destroy_customer_session_path, method: :delete, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<p id="notice"></p>
+<h4>マイページ</h4>
+<p>登録情報</p>
+<%= link_to "編集する", edit_customer_path(current_customer), class: "btn btn-success" %>
+
+<p>氏名</p>
+<%= current_customer.last_name %>
+<%= current_customer.first_name %>
+
+<p>カナ</p>
+<%= current_customer.last_name_kana %>
+<%= current_customer.first_name_kana %>
+
+<p>郵便番号</p>
+<%= current_customer.postal_code %>
+
+<p>住所</p>
+<%= current_customer.address %>
+
+<p>電話番号</p>
+<%= current_customer.telephone_number %>
+
+<p>メールアドレス</p>
+<%= current_customer.email %>
+
+<%= link_to "配送先一覧", addresses_path, class: "btn btn-primary" %>
+<%= link_to "注文履歴", orders_path, class: "btn btn-primary" %>
