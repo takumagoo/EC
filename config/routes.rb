@@ -38,11 +38,11 @@ Rails.application.routes.draw do
     resources :items, only: [:index, :show]
     root to: "homes#top"
     get 'homes/about' => 'homes#about'
-
-    resources :customers, only: [:edit, :update, :withdrawal, :destroy]
+    patch '/customers/withdraw' => 'customers#withdraw'
+    resources :customers, only: [:edit, :update, :destroy]
     get '/customers/my_page' => 'customers#show'
     get 'customers/unsubscribe' => 'customers#unsubscribe'
-    patch '/customers/withdraw' => 'customers#withdrawa'
+
 
     resources :orders, only: [:new, :index, :show, :create, :confirm]
     get 'orders/complete' => 'orders#complete'

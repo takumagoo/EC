@@ -1,11 +1,16 @@
 <p>ジャンル検索</p>
 <% @genres.each do |genre| %>
-  <%#= link_to admin_item_path(item.id) do %>
+  <%= link_to  items_path(genre: genre.id) do %>
     <%= genre.name %></br>
-  <%# end %>
+  <% end %>
 <% end %>
 
-<h2>商品一覧</h2>
+<% if @genre.blank? %>
+  <h2>商品一覧</h2>
+<% else %>
+  <h2><%= @genre.name %>一覧</h2>
+<% end %>
+
 <% @items.each do |item| %>
   <%= image_tag item.get_merch_image(200, 200) %>
   <%= item.name %>
