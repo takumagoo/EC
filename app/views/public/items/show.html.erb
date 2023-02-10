@@ -1,2 +1,14 @@
-<h1>Public::Items#show</h1>
-<p>Find me in app/views/public/items/show.html.erb</p>
+<p id="notice"></p>
+
+<p>ジャンル検索</p>
+<% @genres.each do |genre| %>
+  <%= link_to  items_path(genre: genre.id) do %>
+    <%= genre.name %></br>
+  <% end %>
+<% end %>
+
+<%= image_tag @item.get_merch_image(400, 400) %>
+<%= @item.name %>
+<%= @item.introduction %>
+<p>商品の値段(税込み)</p>
+<p>個数選択</p>
