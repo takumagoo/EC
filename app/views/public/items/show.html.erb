@@ -10,5 +10,9 @@
 <%= image_tag @item.get_merch_image(400, 400) %>
 <%= @item.name %>
 <%= @item.introduction %>
-<p>商品の値段(税込み)</p>
-<p>個数選択</p>
+<%= @item.with_tax_price%>(税込み)
+
+<%= form_with(model: @cart_item,url: cart_items_path, method: :post)do |f| %>
+  <%= f.select :amount, *[1..10] %>
+  <%= f.submit "カートに入れる", class: "btn btn-success" %>
+<% end %>
