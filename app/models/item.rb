@@ -2,6 +2,7 @@ class Item < ApplicationRecord
     # 商品画像をactive_storageと紐づけ
     has_one_attached :merch_image
     has_many :order_details, dependent: :destroy
+    has_many :cart_items, dependent: :destroy
     belongs_to :genre
 
     def get_merch_image(width, height)
