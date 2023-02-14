@@ -57,3 +57,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # deviseを追加
 gem 'devise'
+
+# enum_help の導入
+gem "enum_help"
