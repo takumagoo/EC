@@ -43,13 +43,14 @@ Rails.application.routes.draw do
     get '/customers/my_page' => 'customers#show'
     get 'customers/unsubscribe' => 'customers#unsubscribe'
 
-
-    resources :orders, only: [:new, :index, :show, :create, :confirm]
+    post '/orders/confirm' => 'orders#confirm'
     get 'orders/complete' => 'orders#complete'
-    
+    resources :orders, only: [:new, :index, :show, :create]
+
+
     delete 'cart_items/destroy_all' => 'cart_items#destroy_all'
     resources :cart_items, only: [:index, :create, :update, :destroy]
-    
+
 
     resources :addresses, only: [:index, :edit, :create, :update, :destroy]
   end

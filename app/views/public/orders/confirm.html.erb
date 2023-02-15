@@ -1,0 +1,28 @@
+<h4>注文情報の確認</h4>
+
+<% current_customer.cart_items.each do |cart_item| %>
+  <%= cart_item.item.name %>
+  <%= cart_item.item.with_tax_price %>
+  <%= cart_item.amount %>
+  <%= cart_item.subtotal %>
+<% end %>
+
+<label>送料</label>
+<label>商品合計</label>
+<label>請求金額</label>
+
+<%= form_with model: @order do |f| %>
+  <h4>支払い方法</h4>
+  <%= f.hidden_field :payment_method, :value => @order.payment_method %>
+  <%= f.label :payment_method_credit_card, "クレジットカード" %>
+
+  <h4>お届け先</h4>
+  <%= f.hidden_field :postal_code, :value => @order.postal_code %>
+  <%= @order.postal_code %>
+  <%= f.hidden_field :address, :value => @order.address %>
+  <%= @order.address %>
+  <%= f.hidden_field :name , :value => @order.name  %>
+  <%= @order.name %>
+
+  <%= f.submit '注文を確定する', class: "btn btn-success" %>
+<% end %>
