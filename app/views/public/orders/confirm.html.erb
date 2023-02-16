@@ -7,9 +7,10 @@
   <%= cart_item.subtotal %>
 <% end %>
 
-<label>送料</label>
-<label>商品合計</label>
-<label>請求金額</label>
+<label>送料</label></br>
+<%= @order.postage %></br>
+<label>商品合計</label></br>
+<label>請求金額</label></br>
 
 <%= form_with model: @order do |f| %>
   <h4>支払い方法</h4>

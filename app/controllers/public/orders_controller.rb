@@ -17,14 +17,24 @@ class Public::OrdersController < ApplicationController
     # @order.customer_id = current_customer.id
 
     if params[:order][:address_select] == "myaddress"
+      
       @order.postal_code = current_customer.postal_code
       @order.address = current_customer.address
       @order.name = current_customer.last_name + current_customer.first_name
     elsif params[:order][:address_select] == "registered_address"
+      
+      @address = Address.find(params[:order][:address_id])
+      @order.postal_code = @address.postal_code
+      @order.address = @address.address
+      @order.name = @address.name
       # @order.
     elsif params[:order][:address_select] == "new_address"
-      # @order.
+      @order.postal_code = order_params[:postal_code]
+      @order.address = order_params[:address]
+      @order.name = order_params[:name]
     end
+    
+    @order.postage = 800
   end
 
   def create
