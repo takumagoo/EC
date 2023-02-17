@@ -7,6 +7,7 @@ class Order < ApplicationRecord
     enum address_select: { myaddress: 0, registered_address: 1, new_address: 2 }
     enum status: { wait_payment: 0, payment_confirm: 1, product: 2, prepar_ship: 3, sent: 4 }
     
-    # def 
+    # def subtoal
+    #     item.with_tax_price*cart_item.amount
     # end
 end

@@ -9,8 +9,23 @@
 
 <label>送料</label></br>
 <%= @order.postage %></br>
+
+ <% @cart_subtotal =0 %>
+<!--カート商品の小計処理をする-->
+<%# @cart_items.each do |cart_items| %>
+  <%# @cart_subtotal += cart_items.subtotal %>
+<%# end %>
+<% current_customer.cart_items.each do |cart_items| %>
+  <% @cart_subtotal += cart_items.subtotal %>
+<% end %>
+
+<!--請求金額の処理-->
+<% @order.billing_amount = @order.postage + @cart_subtotal %>
+
 <label>商品合計</label></br>
+<%= @cart_subtotal %></br>
 <label>請求金額</label></br>
+<%= @order.billing_amount %>
 
 <%= form_with model: @order do |f| %>
   <h4>支払い方法</h4>
@@ -22,7 +37,7 @@
   <%= @order.postal_code %>
   <%= f.hidden_field :address, :value => @order.address %>
   <%= @order.address %>
-  <%= f.hidden_field :name , :value => @order.name  %>
+  <%= f.hidden_field :name, :value => @order.name %>
   <%= @order.name %>
 
   <%= f.submit '注文を確定する', class: "btn btn-success" %>

@@ -15,7 +15,7 @@ class CreateOrders < ActiveRecord::Migration[6.1]
       # 請求額
       t.integer :billing_amount
       # 支払い方法
-      t.integer :method_payment
+      t.integer :payment_method
       # 注文ステータス
       t.integer :status
 
