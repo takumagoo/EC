@@ -20,6 +20,6 @@ module EC
     # config.eager_load_paths << Rails.root.join("extras")
 
     # 日本語に対応させる記述を追加
-    # config.i18n.default_locale = :ja
+    config.i18n.default_locale = :ja
   end
 end

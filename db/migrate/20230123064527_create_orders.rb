@@ -17,7 +17,7 @@ class CreateOrders < ActiveRecord::Migration[6.1]
       # 支払い方法
       t.integer :payment_method
       # 注文ステータス
-      t.integer :status
+      t.integer :status, default: 0
 
       t.timestamps
     end

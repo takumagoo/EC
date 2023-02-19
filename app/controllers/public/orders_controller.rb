@@ -9,6 +9,12 @@ class Public::OrdersController < ApplicationController
     @order = Order.new(order_params)
     # @order.customer_id = current_customer.id
 
+    # if params[:order][:payment_method] == "credit_card"
+    @order.payment_method = params[:order][:payment_method]
+    # elsif params[:order][:payment_method] == "transfer"
+    #   @order.payment_method = current_customer.payment_method_transfer
+    # end
+
     if params[:order][:address_select] == "myaddress"
 
       @order.postal_code = current_customer.postal_code
@@ -40,8 +46,21 @@ class Public::OrdersController < ApplicationController
   end
 
   def create
+    # order(親)
     @order = current_customer.orders.new(order_params)
+
     @order.save!
+
+    # order_detail(子)
+    current_customer.cart_items.each do |cart_item|
+      order_detail = OrderDetail.new
+      order_detail.order_id = @order.id
+      order_detail.item_id = cart_item.item_id
+      order_detail.amount = cart_item.amount
+      order_detail.making_status = 0
+      order_detail.save
+    end
+
     redirect_to orders_complete_path
   end
 
@@ -52,6 +71,7 @@ class Public::OrdersController < ApplicationController
   def show
     @order = Order.find(params[:id])
     @orders = Order.all
+    @cart_subtotal = Order.new
   end
 
   def complete
@@ -62,6 +82,6 @@ class Public::OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:payment_method, :postal_code, :address, :name, :billing_amount, :status)
+    params.require(:order).permit(:payment_method, :postal_code, :address, :name, :billing_amount, :status, :postage)
   end
 end

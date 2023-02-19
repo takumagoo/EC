@@ -29,8 +29,14 @@
 
 <%= form_with model: @order do |f| %>
   <h4>支払い方法</h4>
-  <%= f.hidden_field :payment_method, :value => @order.payment_method %>
-  <%= f.label :payment_method_credit_card, "クレジットカード" %>
+    <%= f.hidden_field :payment_method, :value => @order.payment_method %>
+    <%= @order.payment_method_i18n %>
+
+    <%#= f.label :payment_method_credit_card, "クレジットカード" %>
+
+    <%#= f.radio_button :payment_method, "transfer" %>
+    <%#= f.label :payment_method_transfer, "銀行振込" %>
+
 
   <h4>お届け先</h4>
   <%= f.hidden_field :postal_code, :value => @order.postal_code %>
@@ -39,6 +45,8 @@
   <%= @order.address %>
   <%= f.hidden_field :name, :value => @order.name %>
   <%= @order.name %>
+  <%= f.hidden_field :billing_amount, :value => @order.billing_amount %>
+  <%= f.hidden_field :postage, :value => @order.postage %>
 
   <%= f.submit '注文を確定する', class: "btn btn-success" %>
 <% end %>

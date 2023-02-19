@@ -1,24 +1,56 @@
 
 <h4>注文履歴詳細</h4>
-
 <p>注文情報</p>
+<label>注文日</label></br>
+<%= @order.created_at %></br>
+<%= form_with model: @order do |f| %>
 
-<label>注文日</label>
+  <label>配送先</label></br>
+  <%= f.hidden_field :postal_code, :value => @order.postal_code %>
+  <%= @order.postal_code %>
+  <%= f.hidden_field :address, :value => @order.address %>
+  <%= @order.address %>
+  <%= f.hidden_field :name, :value => @order.name %>
+  <%= @order.name %></br>
 
-<label>配送先</label>
+  <label>支払方法</label></br>
 
-<label>支払方法</label>
+  <label>ステータス</label></br>
+  <%= f.hidden_field :status, :value => @order.status %>
+  <%= @order.status %>
+<% end %>
 
-<label>ステータス</label>
 
 <p>請求情報</p>
 
-<label>商品合計</label>
+<label>商品合計</label></br>
+<% @cart_subtotal =0 %>
+<% current_customer.cart_items.each do |cart_items| %>
+  <% @cart_subtotal += cart_items.subtotal %>
+<% end %>
+<%= @cart_subtotal %></br>
 
-<label>配送料</label>
+<label>配送料</label></br>
+<%= @order.postage %>
 
-<label>ご請求額</label>
+<label>ご請求額</label></br>
+<% @order.billing_amount = 0 %>
+<% @order.billing_amount = @order.postage + @cart_subtotal %>
+<%= @order.billing_amount %></br>
+
 
 <p>注文内容</p>
-
-
+<label>商品</label>
+<label>単価</label>
+<label>個数</label>
+<label>小計</label></br>
+<% @order.order_details.each do |order_detail| %>
+  <!--商品-->
+  <%= order_detail.item.name %>
+  <!--単価(税込)-->
+  <%= order_detail.item.with_tax_price %>
+  <!--個数-->
+  <%= order_detail.amount %>
+  <!--小計-->
+  <%= order_detail.item.with_tax_price * order_detail.amount %>
+<% end %>
