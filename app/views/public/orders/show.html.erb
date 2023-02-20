@@ -3,6 +3,7 @@
 <p>注文情報</p>
 <label>注文日</label></br>
 <%= @order.created_at %></br>
+
 <%= form_with model: @order do |f| %>
 
   <label>配送先</label></br>
@@ -14,10 +15,12 @@
   <%= @order.name %></br>
 
   <label>支払方法</label></br>
+  <%#= f.hidden_field :payment_method, :value => @order.payment_method %>
+  <%= @order.payment_method_i18n %></br>
 
   <label>ステータス</label></br>
   <%= f.hidden_field :status, :value => @order.status %>
-  <%= @order.status %>
+  <%= Order.statuses_i18n[@order.status] %></br>
 <% end %>
 
 
@@ -31,7 +34,7 @@
 <%= @cart_subtotal %></br>
 
 <label>配送料</label></br>
-<%= @order.postage %>
+<%= @order.postage %></br>
 
 <label>ご請求額</label></br>
 <% @order.billing_amount = 0 %>

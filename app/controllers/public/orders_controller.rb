@@ -58,6 +58,7 @@ class Public::OrdersController < ApplicationController
       order_detail.item_id = cart_item.item_id
       order_detail.amount = cart_item.amount
       order_detail.making_status = 0
+      order_detail.price = cart_item.item.with_tax_price
       order_detail.save
     end
 

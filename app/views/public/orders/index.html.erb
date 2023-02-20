@@ -19,17 +19,6 @@
 
   <%= order.billing_amount %></br>
   <%= Order.statuses_i18n[order.status] %>
-  <%# if order.status == 0 %>
-    <%#= '入金待ち' %>
-  <%# elsif order.status == 1 %>
-    <%#= '入金確認' %>
-  <%# elsif order.status == 2 %>
-    <%#= '製作中' %>
-  <%# elsif order.status == 3 %>
-    <%#= '発送準備中' %>
-  <%# elsif order.status == 4 %>
-    <%#= '発送済み' %>
-  <%# end %>
 
 
   <%= link_to "表示する", order_path(order.id), class: "btn btn-primary" %></br>

@@ -1,8 +1,8 @@
-<h1>Admin::Customers#show</h1>
-<p>Find me in app/views/admin/customers/show.html.erb</p>
 
-<%= @customer.last_name %>
-<%= @customer.first_name %>さんの会員情報
+<h4>
+  <%= @customer.last_name %>
+  <%= @customer.first_name %>さんの会員情報
+</h4>
 
 <p>会員ID</p>
 <%= @customer.id %>
@@ -28,11 +28,11 @@
 <%= @customer.email %>
 
 <p>会員ステータス</p>
-<% if @customer.is_deleted %>
+<% if @customer.is_deleted == false %>
   有効
 <% else %>
   退会
-<% end %>
+<% end %></br>
 
 <!--編集ボタン-->
 <%= link_to '編集する', edit_admin_customer_path(@customer.id) %>
