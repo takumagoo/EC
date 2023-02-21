@@ -13,7 +13,9 @@ Rails.application.routes.draw do
   }
 
   namespace :admin do
-    resources :orders, only: [:show, :update]
+    resources :orders, only: [:show, :update] do
+       resources :order_details, only: [:update]
+    end
     root to: "homes#top"
     get 'homes/about' => 'homes#about'
   end
@@ -36,6 +38,7 @@ Rails.application.routes.draw do
   # 顧客
   scope module: :public do
     resources :items, only: [:index, :show]
+
     root to: "homes#top"
     get 'homes/about' => 'homes#about'
     patch '/customers/withdraw' => 'customers#withdraw'

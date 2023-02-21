@@ -14,3 +14,10 @@
           product: "製作中"
           prepar_ship: "発送準備中"
           sent: "発送済み"
+      order_detail:
+        making_status:
+          cannot_craft: "クラフト不可"
+          wait_product: "生産待ち"
+          under_const: "製作中"
+          product_complete: "生産完了"
+          

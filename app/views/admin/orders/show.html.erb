@@ -20,7 +20,12 @@
 <% end %>
 
 <p>注文ステータス</p>
-<%= Order.statuses_i18n[@order.status] %></br>
+<%#= Order.statuses_i18n[@order.status] %>
+<%= form_with model: @order, url: admin_order_path(@order.id) do |f| %>
+  <%= f.select :status, Order.statuses_i18n.keys.map{|k| [I18n.t("enums.order.status.#{k}"), k]} %></br>
+  <%= f.submit '更新', class: "btn btn-success" %></br>
+<% end %>
+
 
 <label>商品名</label>
 <label>単価(税込)</label>
@@ -30,13 +35,20 @@
 
 <% @order_subtotal = 0 %>
 <% @order.order_details.each do |order_detail| %>
-
+  <!--商品名-->
   <%= order_detail.item.name %>
-
+  <!--単価(税込)-->
   <%= order_detail.price %>
-
+  <!--数量-->
   <%= order_detail.amount %></br>
+  <!--小計-->
+
   <% @order_subtotal += order_detail.price*order_detail.amount %>
+  <!--作製ステータス-->
+  <%= form_with model: order_detail, url: admin_order_order_detail_path(@order.id, order_detail.id) do |f| %>
+    <%= f.select :making_status, OrderDetail.making_statuses_i18n.keys.map{|k| [I18n.t("enums.order_detail.making_status.#{k}"), k]} %>
+    <%= f.submit '更新', class: "btn btn-success" %>
+  <% end %>
 <% end %>
 
 <p>商品合計</p>

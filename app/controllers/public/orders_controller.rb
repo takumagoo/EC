@@ -1,8 +1,6 @@
 class Public::OrdersController < ApplicationController
   def new
     @order = Order.new
-
-
   end
 
   def confirm
@@ -36,13 +34,11 @@ class Public::OrdersController < ApplicationController
 
     # 送料
     @order.postage = 800
-
     # 商品合計
     # @cart_items = CartItem.find(params[:order][:address_id])
     @cart_items = CartItem.new
     @cart_items = CartItem.where(customer_id: current_customer.id).all
     @cart_subtotal = Order.new
-
   end
 
   def create
@@ -61,7 +57,8 @@ class Public::OrdersController < ApplicationController
       order_detail.price = cart_item.item.with_tax_price
       order_detail.save
     end
-
+    # カート情報の削除
+    
     redirect_to orders_complete_path
   end
 
