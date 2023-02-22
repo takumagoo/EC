@@ -42,7 +42,8 @@
   <!--数量-->
   <%= order_detail.amount %></br>
   <!--小計-->
-
+  <%= order_detail.price*order_detail.amount %>
+  <!--商品合計の計算-->
   <% @order_subtotal += order_detail.price*order_detail.amount %>
   <!--作製ステータス-->
   <%= form_with model: order_detail, url: admin_order_order_detail_path(@order.id, order_detail.id) do |f| %>
