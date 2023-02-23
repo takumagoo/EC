@@ -23,3 +23,23 @@
 </header>
 
 <h1>顧客 Topページ</h1>
+<p>ジャンル検索</p>
+<% @genres.each do |genre| %>
+  <%= link_to  items_path(genre: genre.id) do %>
+    <%= genre.name %></br>
+  <% end %>
+<% end %>
+
+<p>
+  ようこそ、ながのCAKEへ!</br>
+  このサイトは、ケーキ販売のECサイトになります。</br>
+  会員でない方も商品の閲覧はできますが、</br>
+  購入には会員登録が必要となります。
+</p>
+
+<h1>新着商品</h1>
+<% @items.each do |item| %>
+  <%= image_tag item.get_merch_image(200, 200) %>
+  <%= item.name %>
+  <%= item.price %>
+<% end %>

@@ -2,10 +2,10 @@ class Public::ItemsController < ApplicationController
   def index
     @genres = Genre.all
     if params[:genre].blank?
-      @items = Item.all
+      @items = Item.all.order(created_at: :desc)
     else
       @genre = Genre.find(params[:genre])
-      @items = @genre.items
+      @items = @genre.items.order(created_at: :desc)
     end
   end
 
