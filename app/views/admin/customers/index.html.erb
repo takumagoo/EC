@@ -1,25 +1,60 @@
+<header class="shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <h1>LOGO</h1>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ml-auto">
+              <li class="nav-item"><%= link_to "商品一覧", admin_items_path, class: "btn btn-sm btn-outline-secondary" %></li>
+              <li class="nav-item"><%= link_to "会員一覧", admin_customers_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+              <li class="nav-item"><%= link_to "注文履歴一覧", admin_root_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+              <li class="nav-item"><%= link_to "ジャンル一覧", admin_genres_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+              <li class="nav-item"><%= link_to "ログアウト",  destroy_admin_session_path, method: :delete, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+</header>
 
-<h4>会員一覧</h4>
+<p id="notice"></p>
 
-<% @customers.each do |customer| %>
-  <!--会員ID-->
-  <p>会員ID</p>
-  <%= customer.id %>
-  <!--商品名-->
-  <p>氏名</p>
-  <%= link_to  admin_customer_path(customer.id) do %>
-    <%= customer.last_name %>
-    <%= customer.first_name %></br>
-  <% end %>
-
-  <!--メールアドレス-->
-  <p>メールアドレス</p>
-  <%= customer.email %>
-  <!--ステータス-->
-  <p>ステータス</p>
-  <% if customer.is_deleted == false %>
-    有効
-  <% else %>
-    退会
-  <% end %>
-<% end %>
+<div class="container px-5 px-sm-0">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-3">
+          <h4>会員一覧</h4>
+        </div>
+      </div>
+      <table class="table">
+        <thead class="table-secondary">
+          <tr>
+            <th>会員ID</th>
+            <th>氏名</th>
+            <th>メールアドレス</th>
+            <th>ステータス</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @customers.each do |customer| %>
+          <tr>
+            <td><%= customer.id %></td>
+            <td>
+               <%= link_to  admin_customer_path(customer.id) do %>
+                <%= customer.last_name %><%= customer.first_name %>
+              <% end %>
+            </td>
+            <td><%= customer.email %></td>
+            <td>
+               <% if customer.is_deleted == false %>
+                有効
+              <% else %>
+                退会
+              <% end %>
+            </td>
+          </tr>
+          <% end %>
+          </tbody>
+        </table>
+    </div>
+  </div>
+</div>

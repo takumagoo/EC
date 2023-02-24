@@ -1,40 +1,107 @@
+<header class="shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <h1>LOGO</h1>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ml-auto">
+              <li class="nav-item"><%= link_to "商品一覧", admin_items_path, class: "btn btn-sm btn-outline-secondary" %></li>
+              <li class="nav-item"><%= link_to "会員一覧", admin_customers_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+              <li class="nav-item"><%= link_to "注文履歴一覧", admin_root_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+              <li class="nav-item"><%= link_to "ジャンル一覧", admin_genres_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+              <li class="nav-item"><%= link_to "ログアウト",  destroy_admin_session_path, method: :delete, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+</header>
 
-<h4>
-  <%= @customer.last_name %>
-  <%= @customer.first_name %>さんの会員情報編集
-</h4>
+<p id="notice"></p>
 
-<p>会員ID</p>
-<%= @customer.id %>
+<div class="container px-5 px-sm-0">
+  <div class="row">
+    <div class="col-md-12">
+      <h4><%= @customer.last_name %><%= @customer.first_name %>さんの会員情報編集</h4>
+    </div>
+    <div>
+      <%= form_with model: @customer, url:admin_customer_path, method: :patch do |f| %>
+        <div class="row">
+          <div class="col-md-4">
+            <label>氏名</label>
+          </div>
+          <div class="col-md-4">
+            <%= f.text_field :last_name %>
+          </div>
+          <div class="col-md-4">
+            <%= f.text_field :first_name %>
+          </div>
+        </div>
 
-<%= form_with model: @customer, url:admin_customer_path, method: :patch do |f| %>
+        <div class="row">
+          <div class="col-md-4">
+            <label>フリガナ</label>
+          </div>
+          <div class="col-md-4">
+            <%= f.text_field :last_name_kana %>
+          </div>
+          <div class="col-md-4">
+            <%= f.text_field :first_name_kana %>
+          </div>
+        </div>
 
-  <p>氏名</p>
-  <%= f.text_field :last_name %>
-  <%= f.text_field :first_name %>
+        <div class="row">
+          <div class="col-md-4">
+            <label>郵便番号</label>
+          </div>
+          <div class="col-md-8">
+            <%= f.text_field :postal_code %>
+          </div>
+        </div>
 
-  <p>フリガナ</p>
-  <%= f.text_field :last_name_kana %>
-  <%= f.text_field :first_name_kana %>
+        <div class="row">
+          <div class="col-md-4">
+            <label>住所</label>
+          </div>
+          <div class="col-md-8">
+            <%= f.text_field :address %>
+          </div>
+        </div>
 
-  <p>郵便番号</p>
-  <%= f.text_field :postal_code %>
+        <div class="row">
+          <div class="col-md-4">
+            <label>電話番号</label>
+          </div>
+          <div class="col-md-8">
+            <%= f.text_field :telephone_number %>
+          </div>
+        </div>
 
-  <p>住所</p>
-  <%= f.text_field :address %>
+         <div class="row">
+          <div class="col-md-4">
+            <label>メールアドレス</label>
+          </div>
+          <div class="col-md-8">
+            <%= f.text_field :email %>
+          </div>
+        </div>
 
-  <p>電話番号</p>
-  <%= f.text_field :telephone_number %>
+         <div class="row">
+          <div class="col-md-4">
+            <label>会員ステータス</label>
+          </div>
+          <div class="col-md-8">
+            <%= f.radio_button :is_deleted, false %>
+            <%= f.label :is_deleted_false, "有効" %>
 
-  <p>メールアドレス</p>
-  <%= f.text_field :email %>
-
-  <p>会員ステータス</p>
-  <%= f.radio_button :is_deleted, false %>
-  <%= f.label :is_deleted_false, "有効" %>
-
-  <%= f.radio_button :is_deleted, true %>
-  <%= f.label :is_deleted_true, "退会" %>
-
-  <%= f.submit '変更を保存' %>
-<% end %>
+            <%= f.radio_button :is_deleted, true %>
+            <%= f.label :is_deleted_true, "退会" %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-9 offset-md-3">
+            <%= f.submit '変更を保存', class: "btn btn-success" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
