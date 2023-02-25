@@ -1,69 +1,152 @@
+<header class="shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <h1>LOGO</h1>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav ml-auto">
+            <% if admin_signed_in? %>
+              <li class="nav-item"><%= link_to "商品一覧", admin_items_path, class: "btn btn-sm btn-outline-secondary" %></li>
+              <li class="nav-item"><%= link_to "会員一覧", admin_customers_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+              <li class="nav-item"><%= link_to "注文履歴一覧", admin_root_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+              <li class="nav-item"><%= link_to "ジャンル一覧", admin_genres_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+              <li class="nav-item"><%= link_to "ログアウト",  destroy_admin_session_path, method: :delete, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+            <% else %>
+              <li class="nav-item"><%= link_to "About", homes_about_path, class: "btn btn-sm btn-outline-secondary " %></li>
+              <li class="nav-item"><%= link_to "商品一覧", admin_items_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+              <li class="nav-item"><%= link_to "新規登録", new_admin_session_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+              <li class="nav-item"><%= link_to "ログイン", new_admin_session_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
+</header>
 
-<h4>注文履歴詳細</h4>
+<div class="container px-5 px-sm-0">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-3">
+          <h4>注文履歴詳細</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <label>購入者</label>
+        </div>
+        <div class="col-md-9">
+          <%= @order.customer.last_name %><%= @order.customer.first_name %>
+        </div>
+      </div>
 
-<p>購入者</p>
-<%= @order.customer.last_name %>
-<%= @order.customer.first_name %>
+      <div class="row">
+        <div class="col-md-3">
+          <label>注文日</label>
+        </div>
+        <div class="col-md-9">
+          <%= @order.created_at.strftime('%Y/%m/%d') %>
+        </div>
+      </div>
 
-<p>注文日</p>
-<%= @order.created_at.strftime('%Y/%m/%d') %>
+      <div class="row">
+        <div class="col-md-3">
+          <label>配送先</label>
+        </div>
+        <div class="col-md-9">
+          <%= @order.postal_code %><%= @order.address %><%= @order.name %>
+        </div>
+      </div>
 
-<p>配送先</p>
-<%= @order.postal_code %>
-<%= @order.address %>
-<%= @order.name %>
+      <div class="row">
+        <div class="col-md-3">
+          <label>支払い方法</label>
+        </div>
+        <div class="col-md-9">
+          <%= form_with model: @order do |f| %>
+            <%= f.hidden_field :payment_method, :value => @order.payment_method %>
+            <%= @order.payment_method_i18n %>
+          <% end %>
+        </div>
+      </div>
 
-<p>支払い方法</p>
-<%= form_with model: @order do |f| %>
-  <%= f.hidden_field :payment_method, :value => @order.payment_method %>
-  <%= @order.payment_method_i18n %>
-<% end %>
-
-<p>注文ステータス</p>
-<%#= Order.statuses_i18n[@order.status] %>
-<%= form_with model: @order, url: admin_order_path(@order.id) do |f| %>
-  <%= f.select :status, Order.statuses_i18n.keys.map{|k| [I18n.t("enums.order.status.#{k}"), k]} %></br>
-  <%= f.submit '更新', class: "btn btn-success" %></br>
-<% end %>
-
-
-<label>商品名</label>
-<label>単価(税込)</label>
-<label>数量</label>
-<label>小計</label>
-<label>作製ステータス</label>
-
-<% @order_subtotal = 0 %>
-<% @order.order_details.each do |order_detail| %>
-  <!--商品名-->
-  <%= order_detail.item.name %>
-  <!--単価(税込)-->
-  <%= order_detail.price %>
-  <!--数量-->
-  <%= order_detail.amount %></br>
-  <!--小計-->
-  <%= order_detail.price*order_detail.amount %>
-  <!--商品合計の計算-->
-  <% @order_subtotal += order_detail.price*order_detail.amount %>
-  <!--作製ステータス-->
-  <%= form_with model: order_detail, url: admin_order_order_detail_path(@order.id, order_detail.id) do |f| %>
-    <%= f.select :making_status, OrderDetail.making_statuses_i18n.keys.map{|k| [I18n.t("enums.order_detail.making_status.#{k}"), k]} %>
-    <%= f.submit '更新', class: "btn btn-success" %>
-  <% end %>
-<% end %>
-
-<p>商品合計</p>
-
-<%= @order_subtotal %></br>
-
-<p>送料</p>
-<%= @order.postage %>
-
-<p>請求額合計</p>
-<%# @order.billing_amount = @order.postage + @cart_subtotal.to_i %>
-<% @order.billing_amount = @order.postage + @order_subtotal %>
-<%= @order.billing_amount %>
-<%#= f.hidden_field :billing_amount, :value => @order.billing_amount %>
+      <div class="row">
+        <div class="col-md-3">
+          <label>注文ステータス</label>
+        </div>
+        <div class="col-md-9">
+        <%= form_with model: @order, url: admin_order_path(@order.id) do |f| %>
 
 
+          <%= f.select :status, Order.statuses_i18n.keys.map{|k| [I18n.t("enums.order.status.#{k}"), k]} %>
+
+          <%= f.submit '更新', class: "btn btn-success" %>
+
+        <% end %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-7">
+          <table class="table">
+            <thead class="table-secondary">
+              <tr>
+                <th>商品名</th>
+                <th>単価(税込)</th>
+                <th>数量</th>
+                <th>小計</th>
+                <th>作製ステータス</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @order_subtotal = 0 %>
+              <% @order.order_details.each do |order_detail| %>
+                <tr>
+                  <td><%= order_detail.item.name %></td>
+                  <td><%= order_detail.price %></td>
+                  <td><%= order_detail.amount %></td>
+                  <td><%= order_detail.price*order_detail.amount %></td>
+                  <% @order_subtotal += order_detail.price*order_detail.amount %>
+                  <td>
+                      <%= form_with model: order_detail, url: admin_order_order_detail_path(@order.id, order_detail.id) do |f| %>
+                        <%= f.select :making_status, OrderDetail.making_statuses_i18n.keys.map{|k| [I18n.t("enums.order_detail.making_status.#{k}"), k]} %>
+                        <%= f.submit '更新', class: "btn btn-success" %>
+                      <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="col-md-5">
+          <div class="row">
+            <div class="col-md-3">
+              <label>商品合計</label>
+            </div>
+            <div class="col-md-2">
+              <%= @order_subtotal %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <label>送料</label>
+            </div>
+            <div class="col-md-2">
+              <%= @order.postage %>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <label>請求額合計</label>
+            </div>
+            <div class="col-md-2">
+              <% @order.billing_amount = @order.postage + @order_subtotal %>
+              <%= @order.billing_amount %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 

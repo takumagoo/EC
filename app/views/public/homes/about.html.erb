@@ -5,7 +5,7 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ml-auto">
           <% if customer_signed_in? %>
-            <li>ようこそ氏名</li>
+            <li>ようこそ<%=current_customer.first_name %>さん!</li>
             <li class="nav-item"><%= link_to "マイページ", customers_my_page_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
             <li class="nav-item"><%= link_to "商品一覧", items_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
             <li class="nav-item  ml-3">カート</li>
@@ -22,15 +22,13 @@
   </nav>
 </header>
 
-<h1>About</h1>
-<p>
-  ながのCAKEは全国発送可能なケーキ屋さんです。
-</p>
-<p>
-  お子様からお年寄りの方までお召し上がりいただけるよう、
-</p>
-<p>様々なバリエーションを用意しております。</p>
-<p>
-  また、全国発送可能ですので「いつ」でも「どこ」でもご注文いただけます。
-</p>
-<p>ぜひご注文ください。</p>
+<div class=" text-center ">
+  <h1>About</h1>
+  <p>
+    ながのCAKEは全国発送可能なケーキ屋さんです。</br>
+    お子様からお年寄りの方までお召し上がりいただけるよう、</br>
+    様々なバリエーションを用意しております。</br>
+    また、全国発送可能ですので「いつ」でも「どこ」でもご注文いただけます。</br>
+    ぜひご注文ください。
+  </p>
+</div>

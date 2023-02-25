@@ -12,7 +12,7 @@
             <li class="nav-item"><%= link_to "ログアウト",  destroy_customer_session_path, method: :delete, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
           <% else %>
             <li class="nav-item"><%= link_to "About", homes_about_path, class: "btn btn-sm btn-outline-secondary " %></li>
-            <li class="nav-item"><%= link_to "商品一覧", admin_items_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+            <li class="nav-item"><%= link_to "商品一覧", items_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
             <li class="nav-item"><%= link_to "新規登録", new_customer_registration_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
             <li class="nav-item"><%= link_to "ログイン", new_customer_session_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
           <% end %>
@@ -21,37 +21,45 @@
     </div>
   </nav>
 </header>
+<p id="notice"></p>
 
-<h2>ログイン</h2>
+<div class="container">
+  <h5 class="bg-secondaryk">ログイン</h5>
 
-<h4>会員の方はこちらからログイン</h4>
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+  <div class="row">
+    <!--<div class="col-1"></div>-->
+    <div class="col-8">
+      <p>会員の方はこちらからログイン</p>
+    </div>
   </div>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
+  <div class="row">
+    <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 d-flex justify-content-center ">
+
+      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+        <div class="row">
+            <div class="col-5 pb-3"><%= f.label :email, 'メールアドレス'  %></div>
+            <div class="col-7 pb-3"><%= f.email_field :email, autofocus: true, autocomplete: "email" %></div>
+        </div>
+        <div class="row">
+          <div class="col-5 pb-3"><%= f.label :password, 'パスワード' %></div>
+          <div class="col-7 pb-3"><%= f.password_field :password, autocomplete: "current-password" %></div>
+        </div>
+        <div class="row">
+          <div class="col-5"></div>
+          <div class="col-7"><%= f.submit "ログイン", class: "btn btn-primary" %></div>
+        </div>
+      <% end %>
+
+    </div>
   </div>
 
-  <!--<%# if devise_mapping.rememberable? %>-->
-  <!--  <div class="field">-->
-  <!--    <%#= f.check_box :remember_me %>-->
-  <!--    <%#= f.label :remember_me %>-->
-  <!--  </div>-->
-  <!--<%# end %>-->
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
+  <div class="row">
+    <div class="col-8">
+      <p>会員登録がお済でない方</p>
+      <%= link_to 'こちら', new_customer_registration_path %>から新規登録してください。
+    </div>
   </div>
-
-  <h4>会員登録がお済でない方</h4>
-  <%= link_to 'こちら', new_customer_registration_path %>から新規登録してください。
-<% end %>
-
-
-
+</div>
 
 <%#= render "public/shared/links" %>

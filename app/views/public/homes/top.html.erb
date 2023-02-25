@@ -5,14 +5,14 @@
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ml-auto">
           <% if customer_signed_in? %>
-            <li>ようこそ氏名</li>
+            <li>ようこそ、<%=current_customer.last_name %>さん!</li>
             <li class="nav-item"><%= link_to "マイページ", customers_my_page_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
             <li class="nav-item"><%= link_to "商品一覧", cart_items_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
             <li class="nav-item"><%= link_to "カート", items_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
             <li class="nav-item"><%= link_to "ログアウト",  destroy_customer_session_path, method: :delete, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
           <% else %>
             <li class="nav-item"><%= link_to "About", homes_about_path, class: "btn btn-sm btn-outline-secondary " %></li>
-            <li class="nav-item"><%= link_to "商品一覧", admin_items_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+            <li class="nav-item"><%= link_to "商品一覧", items_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
             <li class="nav-item"><%= link_to "新規登録", new_customer_registration_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
             <li class="nav-item"><%= link_to "ログイン", new_customer_session_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
           <% end %>
@@ -21,25 +21,53 @@
     </div>
   </nav>
 </header>
+<p id="notice"></p>
 
-<h1>顧客 Topページ</h1>
-<p>ジャンル検索</p>
-<% @genres.each do |genre| %>
-  <%= link_to  items_path(genre: genre.id) do %>
-    <%= genre.name %></br>
-  <% end %>
-<% end %>
+<div class="container px-5 px-sm-0">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="border border-dark">
+            <p class="border-bottom border-dark">ジャンル検索</p>
+            <div>
+              <% @genres.each do |genre| %>
+                <%= link_to  items_path(genre: genre.id) do %>
+                  <%= genre.name %></br>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-5">
+          <p class="border border-dark pt-4 pb-4">
+            ようこそ、ながのCAKEへ!</br>
+            このサイトは、ケーキ販売のECサイトになります。</br>
+            会員でない方も商品の閲覧はできますが、</br>
+            購入には会員登録が必要となります。</br>
+          </p>
+        </div>
+        <div class="col-md-4">
+        </div>
+      </div>
 
-<p>
-  ようこそ、ながのCAKEへ!</br>
-  このサイトは、ケーキ販売のECサイトになります。</br>
-  会員でない方も商品の閲覧はできますが、</br>
-  購入には会員登録が必要となります。
-</p>
-
-<h1>新着商品</h1>
-<% @items.each do |item| %>
-  <%= image_tag item.get_merch_image(200, 200) %>
-  <%= item.name %>
-  <%= item.price %>
-<% end %>
+      <div class="row">
+        <div class="col-md-3"></div>
+          <div class="col-md-9">
+            <h1>新着商品</h1>
+            <div class="d-flex flex-wrap">
+            <% @items.each do |item| %>
+              <div>
+                <%= image_tag item.get_merch_image(200, 200) %></br>
+                <%= item.name %></br>
+                <%= item.price %>
+              </div>
+            <% end %>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
