@@ -1,19 +1,68 @@
+<header class="shadow-sm">
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+      <h1>LOGO</h1>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+          <% if customer_signed_in? %>
+            <li>ようこそ、<%=current_customer.last_name %>さん!</li>
+            <li class="nav-item"><%= link_to "マイページ", customers_my_page_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+            <li class="nav-item"><%= link_to "商品一覧", items_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+            <li class="nav-item"><%= link_to "カート", cart_items_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+            <li class="nav-item"><%= link_to "ログアウト",  destroy_customer_session_path, method: :delete, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+          <% else %>
+            <li class="nav-item"><%= link_to "About", homes_about_path, class: "btn btn-sm btn-outline-secondary " %></li>
+            <li class="nav-item"><%= link_to "商品一覧", items_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+            <li class="nav-item"><%= link_to "新規登録", new_customer_registration_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+            <li class="nav-item"><%= link_to "ログイン", new_customer_session_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
 <p id="notice"></p>
 
-<p>ジャンル検索</p>
-<% @genres.each do |genre| %>
-  <%= link_to  items_path(genre: genre.id) do %>
-    <%= genre.name %></br>
-  <% end %>
-<% end %>
-
-<%= image_tag @item.get_merch_image(400, 400) %>
-<%= @item.name %>
-<%= @item.introduction %>
-<%= @item.with_tax_price%>(税込み)
-
-<%= form_with(model: @cart_item,url: cart_items_path, method: :post)do |f| %>
-  <%= f.select :amount, *[1..10] %>
-  <%= f.hidden_field :item_id, :value => @item.id %>
-  <%= f.submit "カートに入れる", class: "btn btn-success" %>
-<% end %>
+<div class="container px-5 px-sm-0">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-2">
+          <div class="border border-dark">
+            <p class="border-bottom border-dark">ジャンル検索</p>
+            <div>
+              <% @genres.each do |genre| %>
+                <%= link_to  items_path(genre: genre.id) do %>
+                  <%= genre.name %></br>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-10">
+          <div class="row">
+            <div class="col-md-5">
+              <%= image_tag @item.get_merch_image(400, 400) %>
+            </div>
+            <div class="col-md-5">
+              <div class="mb-5">
+                <h3><%= @item.name %></h3>
+                <%= @item.introduction %></br>
+                <%= @item.with_tax_price%>(税込み)
+              </div>
+              <!--<div class="d-flex flex-wrap">-->
+                <%= form_with(model: @cart_item,url: cart_items_path, method: :post)do |f| %>
+                  <%= f.select :amount, *[1..10] %>
+                  <%= f.hidden_field :item_id, :value => @item.id %>
+                  <!--<div class="ml-5">-->
+                    <%= f.submit "カートに入れる", class: "btn btn-success" %>
+                  <!--</div>-->
+                <% end %>
+              <!--</div>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
