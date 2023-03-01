@@ -1,11 +1,11 @@
 class Public::ItemsController < ApplicationController
   def index
-    @genres = Genre.all
+    @genres = Genre.all.order(created_at: :desc)
     if params[:genre].blank?
-      @items = Item.all.order(created_at: :desc)
+      @items = Item.all.order(created_at: :desc).page(params[:page]).per(8)
     else
       @genre = Genre.find(params[:genre])
-      @items = @genre.items.order(created_at: :desc)
+      @items = @genre.items.order(created_at: :desc).page(params[:page]).per(8)
     end
   end
 

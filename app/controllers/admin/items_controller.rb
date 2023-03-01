@@ -13,7 +13,7 @@ class Admin::ItemsController < ApplicationController
 
   def index
     # 一覧の変数
-    @items = Item.all
+    @items = Item.all.page(params[:page])
   end
 
   def show

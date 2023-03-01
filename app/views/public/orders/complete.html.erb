@@ -1,1 +1,27 @@
-<h1>ご注文ありがとうございました!</h1>
+<style>
+  main{
+    height: 100%;
+  }
+</style>
+
+<header class="shadow-sm">
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+      <h1>LOGO</h1>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+            <li>ようこそ、<%=current_customer.last_name %>さん!</li>
+            <li class="nav-item"><%= link_to "マイページ", customers_my_page_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+            <li class="nav-item"><%= link_to "商品一覧", items_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+            <li class="nav-item"><%= link_to "カート", cart_items_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+            <li class="nav-item"><%= link_to "ログアウト",  destroy_customer_session_path, method: :delete, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+<p id="notice"></p>
+
+  <div class="h-100 d-flex text-center align-items-center">
+    <h1 class="w-100">ご注文ありがとうございました!</h1>
+  </div>

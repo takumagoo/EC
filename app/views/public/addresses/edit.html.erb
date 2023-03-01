@@ -4,10 +4,10 @@
       <h1>LOGO</h1>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav ml-auto">
-            <li>ようこそ氏名</li>
+            <li>ようこそ、<%=current_customer.last_name %>さん!</li>
             <li class="nav-item"><%= link_to "マイページ", customers_my_page_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
             <li class="nav-item"><%= link_to "商品一覧", items_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
-            <li class="nav-item  ml-3">カート</li>
+            <li class="nav-item"><%= link_to "カート", cart_items_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
             <li class="nav-item"><%= link_to "ログアウト",  destroy_customer_session_path, method: :delete, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
         </ul>
       </div>
@@ -15,14 +15,52 @@
   </nav>
 </header>
 
-<h4>配送先編集</h4>
+<p id="notice"></p>
 
-<%= form_with model: @address, url:address_path, method: :patch do |f| %>
-  <label>郵便番号</label>
-  <%= f.text_field :postal_code %>
-  <label>住所</label>
-  <%= f.text_field :address %>
-  <label>宛名</label>
-  <%= f.text_field :name %>
-  <%= f.submit '変更内容を保存', class: "btn btn-success" %>
-<% end %>
+<div class="container px-5 px-sm-0">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <h4>配送先編集</h4>
+        </div>
+      </div>
+
+      <%= form_with model: @address, url:address_path, method: :patch do |f| %>
+        <div class="row">
+          <div class="col-md-3">
+            <label>郵便番号(ハイフンなし)</label>
+          </div>
+          <div class="col-md-9">
+            <%= f.text_field :postal_code %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <label>住所</label>
+          </div>
+          <div class="col-md-9">
+            <%= f.text_field :address %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-3">
+            <label>宛名</label>
+          </div>
+          <div class="col-md-4">
+            <%= f.text_field :name %>
+          </div>
+          <div class="col-md-5">
+            <%= f.submit '変更内容を保存', class: "btn btn-success" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+
+
+

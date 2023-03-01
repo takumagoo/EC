@@ -1,7 +1,7 @@
 class Public::HomesController < ApplicationController
   def top
     @genres = Genre.all
-    @items = Item.all.order(created_at: :desc)
+    @items = Item.all.page(params[:page]).per(4)
 
     # if params[:genre].blank?
     #   # @items = Item.all

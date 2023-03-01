@@ -40,7 +40,7 @@
           <% @cart_items.each do |cart_items| %>
             <tr>
               <td class="border-right border-dark">
-                <%= image_tag cart_items.item.get_merch_image(70, 70) %>
+                <%= image_tag cart_items.item.get_merch_image(70, 70, "Center") %>
                 <%= cart_items.item.name %>
               </td class="border-right border-dark">
               <td class="border-right border-dark"><%= cart_items.item.with_tax_price %></td>

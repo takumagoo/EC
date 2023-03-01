@@ -1,59 +1,144 @@
+<header class="shadow-sm">
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+      <h1>LOGO</h1>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+            <li>ようこそ、<%=current_customer.last_name %>さん!</li>
+            <li class="nav-item"><%= link_to "マイページ", customers_my_page_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+            <li class="nav-item"><%= link_to "商品一覧", items_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+            <li class="nav-item"><%= link_to "カート", cart_items_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+            <li class="nav-item"><%= link_to "ログアウト",  destroy_customer_session_path, method: :delete, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+<p id="notice"></p>
 
-<h4>注文履歴詳細</h4>
-<p>注文情報</p>
-<label>注文日</label></br>
-<%= @order.created_at %></br>
+<div class="container px-5 px-sm-0">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="row">
+        <div class="col-md-5 mb-3">
+          <h4>注文履歴詳細</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mr-1">
+          <p><strong>注文情報</strong></p>
+           <%= form_with model: @order do |f| %>
+          <div class="row border border-dark">
+            <div class="col-md-3 border-right border-dark">
+              <label>注文日</label>
+            </div>
+            <div class="col-md-4">
+              <%= @order.created_at.strftime('%Y/%m/%d') %>
+            </div>
+          </div>
+          <div class="row border border-dark">
+            <div class="col-md-3 border-right border-dark">
+              <label>配送先</label>
+            </div>
+            <div class="col-md-4">
+              <%= f.hidden_field :postal_code, :value => @order.postal_code %>
+              <%= @order.postal_code %>
+              <%= f.hidden_field :address, :value => @order.address %>
+              <%= @order.address %>
+              <%= f.hidden_field :name, :value => @order.name %>
+              <%= @order.name %>
+            </div>
+          </div>
 
-<%= form_with model: @order do |f| %>
+          <div class="row border border-dark">
+            <div class="col-md-3 border-right border-dark">
+              <label>支払方法</label>
+            </div>
+            <div class="col-md-4">
+                <%= @order.payment_method_i18n %>
+            </div>
+          </div>
+          <div class="row border border-dark">
+            <div class="col-md-3 border-right border-dark">
+              <label>ステータス</label>
+            </div>
+            <div class="col-md-4">
+                <%= f.hidden_field :status, :value => @order.status %>
+                <%= Order.statuses_i18n[@order.status] %>
+            </div>
+          </div>
+          <% end %>
+        </div>
 
-  <label>配送先</label></br>
-  <%= f.hidden_field :postal_code, :value => @order.postal_code %>
-  <%= @order.postal_code %>
-  <%= f.hidden_field :address, :value => @order.address %>
-  <%= @order.address %>
-  <%= f.hidden_field :name, :value => @order.name %>
-  <%= @order.name %></br>
+        <div class="col-md-4">
+          <p><strong>請求情報</strong></p>
 
-  <label>支払方法</label></br>
-  <%#= f.hidden_field :payment_method, :value => @order.payment_method %>
-  <%= @order.payment_method_i18n %></br>
+          <div class="row border border-dark">
+            <div class="col-md-3 border-right border-dark">
+              <label>商品合計</label>
+            </div>
+            <div class="col-md-1">
+              <% @cart_subtotal =0 %>
+              <% current_customer.cart_items.each do |cart_items| %>
+                <% @cart_subtotal += cart_items.subtotal %>
+              <% end %>
+              <%= @cart_subtotal %>
+            </div>
+          </div>
+          <div class="row border border-dark">
+            <div class="col-md-3 border-right border-dark">
+              <label>配送料</label>
+            </div>
+            <div class="col-md-1">
+               <%= @order.postage %>
+            </div>
+          </div>
+          <div class="row border border-dark">
+            <div class="col-md-3 border-right border-dark">
+              <label>ご請求額</label>
+            </div>
+            <div class="col-md-1">
+              <% @order.billing_amount = 0 %>
+              <% @order.billing_amount = @order.postage + @cart_subtotal %>
+              <%= @order.billing_amount %>
+            </div>
+          </div>
+        </div>
+      </div>
 
-  <label>ステータス</label></br>
-  <%= f.hidden_field :status, :value => @order.status %>
-  <%= Order.statuses_i18n[@order.status] %></br>
-<% end %>
+      <p class="mt-3 mb-3"><strong>注文内容</strong></p>
+      <div class="row">
+        <div class="col-md-9">
+          <table class="table mb-0 border border-dark">
+            <thead>
+              <tr>
+                <th class="border-right border-dark">商品</th>
+                <th class="border-right border-dark">単価(税込み)</th>
+                <th class="border-right border-dark">個数</th>
+                <th class="border-right border-dark">小計</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @order.order_details.each do |order_detail| %>
+                <tr>
+                  <td class="border-right border-dark"><%= order_detail.item.name %></td>
+                  <td class="border-right border-dark"><%= order_detail.item.with_tax_price %></td>
+                  <td class="border-right border-dark"><%= order_detail.amount %></td>
+                  <td class="border-right border-dark"><%= order_detail.item.with_tax_price * order_detail.amount %></td>
+                </tr>
+               <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
-<p>請求情報</p>
-
-<label>商品合計</label></br>
-<% @cart_subtotal =0 %>
-<% current_customer.cart_items.each do |cart_items| %>
-  <% @cart_subtotal += cart_items.subtotal %>
-<% end %>
-<%= @cart_subtotal %></br>
-
-<label>配送料</label></br>
-<%= @order.postage %></br>
-
-<label>ご請求額</label></br>
-<% @order.billing_amount = 0 %>
-<% @order.billing_amount = @order.postage + @cart_subtotal %>
-<%= @order.billing_amount %></br>
 
 
-<p>注文内容</p>
-<label>商品</label>
-<label>単価</label>
-<label>個数</label>
-<label>小計</label></br>
-<% @order.order_details.each do |order_detail| %>
-  <!--商品-->
-  <%= order_detail.item.name %>
-  <!--単価(税込)-->
-  <%= order_detail.item.with_tax_price %>
-  <!--個数-->
-  <%= order_detail.amount %>
-  <!--小計-->
-  <%= order_detail.item.with_tax_price * order_detail.amount %>
-<% end %>
+
+
+
+

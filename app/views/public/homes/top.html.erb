@@ -60,7 +60,7 @@
             <div class="d-flex flex-wrap">
             <% @items.each do |item| %>
               <div>
-                <%= image_tag item.get_merch_image(200, 200) %></br>
+                <%= image_tag item.get_merch_image(200, 200, "Center") %></br>
                 <%= item.name %></br>
                 <%= item.price %>
               </div>
@@ -68,6 +68,9 @@
             </div>
           </div>
       </div>
+    </div>
+    <div class="col-md-7 offset-md-5">
+      <%= paginate @items %>
     </div>
   </div>
 </div>

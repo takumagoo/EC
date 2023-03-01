@@ -1,52 +1,128 @@
-<h4>注文情報の確認</h4>
+<header class="shadow-sm">
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container">
+      <h1>LOGO</h1>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ml-auto">
+            <li>ようこそ、<%=current_customer.last_name %>さん!</li>
+            <li class="nav-item"><%= link_to "マイページ", customers_my_page_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+            <li class="nav-item"><%= link_to "商品一覧", items_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+            <li class="nav-item"><%= link_to "カート", cart_items_path, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+            <li class="nav-item"><%= link_to "ログアウト",  destroy_customer_session_path, method: :delete, class: "btn btn-sm btn-outline-secondary ml-3" %></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+<p id="notice"></p>
 
-<% current_customer.cart_items.each do |cart_item| %>
-  <%= cart_item.item.name %>
-  <%= cart_item.item.with_tax_price %>
-  <%= cart_item.amount %>
-  <%= cart_item.subtotal %>
-<% end %>
+<div class="container px-5 px-sm-0">
+  <!--<div class="row">-->
+    <!--<div class="col-md-12">-->
+      <div class="row">
+        <div class="col-md-5 pb-2">
+          <h4>注文情報の確認</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="border border-dark mb-3">
+            <table class="table mb-0">
+              <thead class="table-secondary">
+                <tr>
+                  <th class="border-right border-dark">商品名</th>
+                  <th class="border-right border-dark">単価(税込)</th>
+                  <th class="border-right border-dark">数量</th>
+                  <th class="border-right border-dark">小計</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% current_customer.cart_items.each do |cart_item| %>
+                  <tr>
+                    <td class="border-right border-dark">
+                      <%= image_tag cart_item.item.get_merch_image(70, 70, "Center") %>
+                      <%= cart_item.item.name %>
+                    </td>
+                    <td class="border-right border-dark"><%= cart_item.item.with_tax_price %></td>
+                    <td class="border-right border-dark"><%= cart_item.amount %></td>
+                    <td class="border-right border-dark"><%= cart_item.subtotal %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="ml-3">
+          <div class="border border-dark">
 
-<label>送料</label></br>
-<%= @order.postage %></br>
+            <% @cart_subtotal =0 %>
+            <% current_customer.cart_items.each do |cart_items| %>
+              <% @cart_subtotal += cart_items.subtotal %>
+            <% end %>
+            <!--請求金額の処理-->
+            <% @order.billing_amount = @order.postage + @cart_subtotal %>
+            <table class="mr-0">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-bottom border-dark ">
+                  <td class="border-right border-bottom border-dark">送料</td>
+                  <td class="pl-3 pr-5"><%= @order.postage %></td>
+                </tr>
+                <tr>
+                  <td class="border-right border-dark">商品合計</td>
+                  <td class="pl-3 pr-5"><%= @cart_subtotal %></td>
+                </tr>
+                <tr>
+                  <td class="border-right border-dark">請求金額</td>
+                  <td class="pl-3 pr-5"><%= @order.billing_amount %></td>
+                </tr>
 
- <% @cart_subtotal =0 %>
-<!--カート商品の小計処理をする-->
-<%# @cart_items.each do |cart_items| %>
-  <%# @cart_subtotal += cart_items.subtotal %>
-<%# end %>
-<% current_customer.cart_items.each do |cart_items| %>
-  <% @cart_subtotal += cart_items.subtotal %>
-<% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!--<div class="row">-->
+        <%= form_with model: @order do |f| %>
+          <div class="mb-4">
+            <div class="row">
+            <p class="h5"><strong>支払い方法</strong></p>
+            <p class="pl-2">
+              <%= @order.payment_method_i18n %>
+            </p>
+            </div>
+          </div>
+          <div class="mb-4">
+            <div class="row">
+              <p class="h5"><strong>お届け先</strong></p>
+              <p class="pl-2">
+                〒<%= f.hidden_field :payment_method, :value => @order.payment_method %>
+                <%= f.hidden_field :postal_code, :value => @order.postal_code %>
+                <%= @order.postal_code %>
+                <%= f.hidden_field :address, :value => @order.address %>
+                <%= @order.address %>
+                <%= f.hidden_field :name, :value => @order.name %>
+                <%= @order.name %>
+                <%= f.hidden_field :billing_amount, :value => @order.billing_amount %>
+                <%= f.hidden_field :postage, :value => @order.postage %>
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-auto mx-auto">
+              <%= f.submit '注文を確定する', class: "btn btn-success" %>
+            </div>
+          </div>
+        <% end %>
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
+</div>
 
-<!--請求金額の処理-->
-<% @order.billing_amount = @order.postage + @cart_subtotal %>
-
-<label>商品合計</label></br>
-<%= @cart_subtotal %></br>
-<label>請求金額</label></br>
-<%= @order.billing_amount %>
-
-<%= form_with model: @order do |f| %>
-  <h4>支払い方法</h4>
-    <%= f.hidden_field :payment_method, :value => @order.payment_method %>
-    <%= @order.payment_method_i18n %>
-
-    <%#= f.label :payment_method_credit_card, "クレジットカード" %>
-
-    <%#= f.radio_button :payment_method, "transfer" %>
-    <%#= f.label :payment_method_transfer, "銀行振込" %>
 
 
-  <h4>お届け先</h4>
-  <%= f.hidden_field :postal_code, :value => @order.postal_code %>
-  <%= @order.postal_code %>
-  <%= f.hidden_field :address, :value => @order.address %>
-  <%= @order.address %>
-  <%= f.hidden_field :name, :value => @order.name %>
-  <%= @order.name %>
-  <%= f.hidden_field :billing_amount, :value => @order.billing_amount %>
-  <%= f.hidden_field :postage, :value => @order.postage %>
-
-  <%= f.submit '注文を確定する', class: "btn btn-success" %>
-<% end %>

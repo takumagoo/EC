@@ -5,12 +5,12 @@ class Item < ApplicationRecord
     has_many :cart_items, dependent: :destroy
     belongs_to :genre
 
-    def get_merch_image(width, height)
+    def get_merch_image(width, height, center)
         unless merch_image.attached?
           file_path = Rails.root.join('app/assets/images/no_image.jpg')
           merch_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/jpeg')
         end
-        merch_image.variant(resize_to_limit: [width, height]).processed
+        merch_image.variant(resize_to_fill: [width, height]).processed
     end
     
     def with_tax_price
