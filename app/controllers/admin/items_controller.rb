@@ -8,7 +8,7 @@ class Admin::ItemsController < ApplicationController
     item = Item.new(item_params)
     item.save
     # リダイレクト (一応：一覧画面へ)
-    redirect_to admin_items_path
+    redirect_to admin_item_path(item.id)
   end
 
   def index
@@ -28,7 +28,7 @@ class Admin::ItemsController < ApplicationController
     item = Item.find(params[:id])
     item.update(item_params)
     # リダイレクト (一応：一覧画面へ)
-    redirect_to admin_items_path
+    redirect_to admin_item_path(item.id)
   end
 
 

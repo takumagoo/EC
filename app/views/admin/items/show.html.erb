@@ -28,53 +28,53 @@
   <div class="row">
     <div class="col-md-12">
       <h4>商品詳細</h4>
-      <div class="row">
+      <div class="row mt-5">
         <!--画像表示-->
-        <div class="col-2 pb-3">
-          <%= image_tag @item.get_merch_image(200, 200) %>
+        <div class="col-4 pb-3">
+          <%= image_tag @item.get_merch_image(300, 300, "Center") %>
         </div>
-        <div class="col-10 pb-3">
+        <div class="col-8 pb-3">
           <div class="row">
-            <div class="col-4 pb-3">
+            <div class="col-3 pb-3">
               <label>商品名</label>
             </div>
-            <div class="col-6 pb-3">
+            <div class="col-4 pb-3">
               <%= @item.name %>
             </div>
           </div>
           <div class="row">
-            <div class="col-4 pb-3">
+            <div class="col-3 pb-3">
               <label>商品説明</label>
             </div>
-            <div class="col-6 pb-3">
+            <div class="col-4 pb-3">
               <%= @item.introduction %>
             </div>
           </div>
           <div class="row">
-            <div class="col-4 pb-3">
+            <div class="col-3 pb-3">
               <label>ジャンル</label>
             </div>
-            <div class="col-6 pb-3">
+            <div class="col-4 pb-3">
               <%= @item.genre.name %>
             </div>
           </div>
           <div class="row">
-            <div class="col-4 pb-3">
+            <div class="col-3 pb-3">
               <label>
                 税込み価格</br>
                 (税抜価格)
               </label>
             </div>
-            <div class="col-6 pb-3">
+            <div class="col-4 pb-3">
               <%= @item.with_tax_price %>
               (<%= @item.price %>)円
             </div>
           </div>
           <div class="row">
-            <div class="col-4 pb-3">
+            <div class="col-3 pb-3">
               <label>販売ステータス</label>
             </div>
-            <div class="col-6 pb-3">
+            <div class="col-4 pb-3">
               <% if @item.is_active %>
                   <p class="text-success font-weight-bold">販売中</p>
               <% else %>
@@ -83,7 +83,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-9 offset-md-3">
+        <div class="col-md-7 offset-md-5">
           <%= link_to '編集する', edit_admin_item_path(@item.id), class: "btn btn-success" %>
         </div>
       </div>
