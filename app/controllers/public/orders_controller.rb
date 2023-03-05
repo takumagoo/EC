@@ -5,13 +5,8 @@ class Public::OrdersController < ApplicationController
 
   def confirm
     @order = Order.new(order_params)
-    # @order.customer_id = current_customer.id
 
-    # if params[:order][:payment_method] == "credit_card"
     @order.payment_method = params[:order][:payment_method]
-    # elsif params[:order][:payment_method] == "transfer"
-    #   @order.payment_method = current_customer.payment_method_transfer
-    # end
 
     if params[:order][:address_select] == "myaddress"
 
@@ -58,7 +53,8 @@ class Public::OrdersController < ApplicationController
       order_detail.save
     end
     # カート情報の削除
-    
+    current_customer.cart_items.destroy_all
+
     redirect_to orders_complete_path
   end
 
@@ -68,7 +64,6 @@ class Public::OrdersController < ApplicationController
 
   def show
     @order = Order.find(params[:id])
-    @orders = Order.all
     @cart_subtotal = Order.new
   end
 

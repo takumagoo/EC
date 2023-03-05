@@ -77,9 +77,9 @@
               <label>商品合計</label>
             </div>
             <div class="col-md-1">
-              <% @cart_subtotal =0 %>
-              <% current_customer.cart_items.each do |cart_items| %>
-                <% @cart_subtotal += cart_items.subtotal %>
+              <% @cart_subtotal = 0 %>
+              <% @order.order_details.each do |order_detail| %>
+                <% @cart_subtotal += order_detail.subtotal %>
               <% end %>
               <%= @cart_subtotal %>
             </div>

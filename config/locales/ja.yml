@@ -16,8 +16,7 @@
           sent: "発送済み"
       order_detail:
         making_status:
-          cannot_craft: "クラフト不可"
-          wait_product: "生産待ち"
+          cannot_craft: "製作不可"
+          wait_product: "製作待ち"
           under_const: "製作中"
-          product_complete: "生産完了"
-          
+          product_complete: "製作完了"

@@ -25,14 +25,14 @@
           <h4>会員情報編集</h4>
         </div>
       </div>
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <%= form_with model: @customer, url:customer_path(@customer.id), method: :patch do |f| %>
+      <%= form_with model: @customer, url:customer_path(@customer.id), method: :patch do |f| %>
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
             <tr>
               <td>氏名</td>
               <td><%= f.text_field :last_name, class: "mr-3" %><%= f.text_field :first_name %></td>
@@ -64,9 +64,9 @@
                 <%= link_to "退会する", customers_unsubscribe_path, class: "btn btn-danger" %>
               </td>
             </tr>
-          <% end %>
-        </tbody>
-      </table>
+          </tbody>
+        </table>
+      <% end %>
     </div>
   </div>
 </div>
